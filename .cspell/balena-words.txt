@@ -4,6 +4,7 @@ balena-api
 balena-base-ui
 balena-build
 balena-builder
+balenacli
 balenahup
 balenalib
 balenista
@@ -19,6 +20,7 @@ Fincm
 flowzone
 generic
 hostapp
+hostvia
 Katapult
 kompose
 landr
@@ -26,8 +28,10 @@ metalsmith
 model
 multicontainer
 Nicky
+nodesdk
 openbalena
 private-contracts
+pythonsdk
 resinio
 Rulemotion
 SBVR
@@ -35,6 +39,5 @@ Seeed
 sshproxy
 testbot
 undiscounted
-versionbot
 Versionist
 volume-pricing
