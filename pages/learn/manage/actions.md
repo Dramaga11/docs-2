@@ -14,9 +14,9 @@ Actions and Settings allow you to control the status of your fleets and the devi
 
 [Fleet members][fleet-members] with the Operator role and above can perform any of the actions or settings listed below.
 
-### Restart Fleet
+### Restart Services
 
-The `Restart Fleet` action restarts the currently running **services** for all devices in your fleet. Your fleet's running containers will be removed and recreated from scratch. This behavior is intended and is different from running `balena restart [OPTIONS] CONTAINER [CONTAINER...]` in a host OS terminal instance from your dashboard, which will not remove your containers. If you are trying to persist data between container removals, see [persistent storage][persistent-storage] for strategies.
+The `Restart Services` action restarts the currently running **services** for all devices in your fleet. Your fleet's running containers will be removed and recreated from scratch. This behavior is intended and is different from running `balena restart [OPTIONS] CONTAINER [CONTAINER...]` in a host OS terminal instance from your dashboard, which will not remove your containers. If you are trying to persist data between container removals, see [persistent storage][persistent-storage] for strategies.
 
 By removing containers and recreating them from scratch, we see benefits like the following:
 
@@ -44,7 +44,7 @@ __Warning:__ This action is only supported on devices with an Agent version >= 1
 
 ### Reboot
 
-This action allows you to perform a reboot on your devices. This is different from the `Restart Fleet` action mentioned above. With this action, the entire device, including the kernel, will be rebooted as if there was a power cycle. It should be noted that currently these action notifications are not queued up, so if a device is offline when the action is triggered, it will never be notified of the action it missed.
+This action allows you to perform a reboot on your devices. This is different from the `Restart Services` action mentioned above. With this action, the entire device, including the kernel, will be rebooted as if there was a power cycle. It should be noted that currently these action notifications are not queued up, so if a device is offline when the action is triggered, it will never be notified of the action it missed.
 
 __Warning:__ This action is only supported on devices with an Agent version >= 1.1.0
 
@@ -66,15 +66,15 @@ The `Delete Device` action is an extremely dangerous action and results in disas
 
 {{ $names.company.upper }} currently exposes **port 80** for web forwarding. This setting enables web forwarding and generates a web accessible url for any applicable devices. The URLs will be of the form `<{{ $names.company.allCaps }}_DEVICE_UUID>.balena-devices.com`, where `<{{ $names.company.allCaps }}_DEVICE_UUID>` is the unique ID of the device which you can see on your dashboard. Currently only HTTP traffic (level 7 OSI traffic) is supported via the device URLs.
 
-<img alt="Toggle public device URL" src="/img/common/settings/toggle-public-url.png">
+<img alt="Toggle public device URL" src="/img/common/settings/toggle-public-url.webp">
 
 To see what your device is serving on port 80, click on the [public URL][public-url]. If no service inside your app is serving anything on port 80 or your webserver on the device crashes, you should see something like this:
 
-<img alt="Public URL error" src="/img/common/settings/public-url-error.png" width="80%">
+<img alt="Public URL error" src="/img/common/settings/public-url-error.webp" width="80%">
 
 You may also enable or disable public device URLs by clicking the _Public device URL_ toggle button on the device summary page.
 
-<img alt="Public URL toggle" src="/img/common/settings/public-url-toggle.png" width="80%">
+<img alt="Public URL toggle" src="/img/common/settings/public-url-toggle.webp" width="80%">
 
 ### Move device to another Fleet
 
@@ -179,12 +179,12 @@ __Info:__ If you have a device [preloaded][preload-devices] with an OS version l
 [fleet-types]:/learn/manage/app-types
 [persistent-storage]:/learn/develop/runtime/#persistent-storage
 [purge-data]:#purge-data
-[organization]:/learn/manage/organizations/
-[administrator]:/learn/manage/organizations/#managing-roles--access-in-an-organization
-[add-application-member]:/learn/manage/account/#add-an-application-member
-[developer]:/learn/manage/account/#developer
-[support-access]:/learn/manage/support-access
-[inactive-devices]:/learn/manage/billing/#inactive-devices
-[fleet-members]:/learn/manage/account/#fleet-members
+[organization]:/learn/accounts/organizations/
+[administrator]:/learn/accounts/organizations/#managing-roles--access-in-an-organization
+[add-application-member]:/learn/accounts/account/#add-an-application-member
+[developer]:/learn/accounts/fleet-members#developer
+[support-access]:/learn/accounts/support-access
+[inactive-devices]:/learn/accounts/billing/#inactive-devices
+[fleet-members]:/learn/accounts/fleet-members
 [docker-data-persistence-strategies]:https://docs.docker.com/storage/
 [public-url]:/learn/develop/runtime/#public-device-urls

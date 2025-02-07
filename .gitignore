@@ -3,6 +3,7 @@ node_modules/
 server/nav.json
 npm-debug.log
 static/dist
+contracts/
 
 .#*
 
@@ -13,11 +14,8 @@ tmp
 .lycheecache
 
 # Ignore external docs that are pulled via tools/fetch-external.sh
-pages/reference/cli.md
-pages/reference/balena-cli.md
-
-pages/reference/sdk/node-sdk.md
-pages/reference/sdk/python-sdk.md
+# pages/reference/sdk/node-sdk.md
+# pages/reference/sdk/python-sdk.md
 
 pages/reference/supervisor/supervisor-api.md
 pages/reference/supervisor/upgrade-policy.md
@@ -39,12 +37,29 @@ pages/reference/OS/updates/rollbacks.md
 pages/reference/OS/customer-board-support.md
 pages/reference/OS/debugging-balenaos.md
 
+pages/reference/base-images/base-images-ref.md
+
 # Ignore dynamic docs created for masterclasses
 shared/masterclass
+
+# Ignore dynamic balenaCLI version docs
+config/dictionaries/balenacli.json
+shared/balena-cli-versions/
+
+# Ignore dynamic balena-SDK version docs
+config/dictionaries/nodesdk.json
+shared/balena-sdk-versions/
+
+# Ignore dynamic Python SDK version docs
+config/dictionaries/pythonsdk.json
+shared/balena-sdk-python-versions/
 
 # Ignore dynamic assets generated for Getting Started
 static/img/device/**
 config/dictionaries/device.json
+
+# Ignore generated docs for base images
+shared/general/base-images.md
 
 # Curl error output
 output

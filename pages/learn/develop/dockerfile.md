@@ -163,7 +163,7 @@ We use [Raspbian][raspbian] as our contained operating system, so this script us
 
 __Note:__ With a plain Node.js project, our build server will detect compatible nodejs versions from the `package.json` and build the container using a Docker image that satisfies the version requirement. If no version is specified then the default node version is `0.10.22` and it will be used if a node version is not specified. There will be an error if the specified node version is not in our registry. You can either try another node version or contact us to be supported. More details about Docker node images in our registry can be found [here][base-images].
 
-![terminal-builder-window](/img/terminal-builder-window.PNG)
+![terminal-builder-window](/img/terminal-builder-window.webp)
 
 ## Container Requirements
 
@@ -198,7 +198,7 @@ The {{ $names.company.lower }} Supervisor requires that the directory `/tmp/bale
 [builders]:/learn/deploy/deployment
 [local-build]:/reference/cli/#build-source
 [multicontainer]:/learn/develop/multicontainer
-[base-images]:/reference/base-images/base-images
+[base-images]:/reference/base-images/balena-base-images
 [supported-devices]:/reference/base-images/devicetypes/
 
 [init-system-link]:https://en.wikipedia.org/wiki/Init

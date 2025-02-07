@@ -24,6 +24,8 @@ title: I2C and Other Interfaces
   * [Serial ports](/hardware/i2c-and-spi#serial-ports)
 * [Jetson Devices](/hardware/i2c-and-spi#jetson-devices)
   * [Custom device trees](/hardware/i2c-and-spi#custom-device-trees)
+  * [Configurable fan profiles](/hardware/i2c-and-spi#configurable-fan-profiles)
+  * [Configurable power modes](/hardware/i2c-and-spi#configurable-power-modes)
 
 ## Raspberry Pi Family
 
@@ -161,7 +163,7 @@ These are some tips and tricks for customizing your raspberry pi. Most of them r
 
 You can also set all of these variables remotely for a single device or the entire fleet using the Configuration tab on the device or fleet level respectively. If the setting in `config.txt` is `variable=value`, you can achieve the same settings by adding a configuration variable with `BALENA_HOST_CONFIG_variable` set to the value `value`. For example:
 
-![Setting the device configuration for Raspberry Pi config.txt variables](/img/hardware/host_config.png)
+![Setting the device configuration for Raspberry Pi config.txt variables](/img/hardware/host_config.webp)
 
 For simplicity, below all examples are using the `config.txt` formatting, but all of them are available to set remotely as outlined above.
 
@@ -257,50 +259,6 @@ echo 1 > /sys/class/gpio/gpio74/value
 ```
 Pin 41 of Header P8 should go high.
 
-## Intel Edison
-### MRAA for GPIO and hardware access
-The best and easiest way to interface with GPIO, I2C, SPI or UART on the Intel Edison is to use the
-[MRAA library][mraa-link], this library gives you a simple way to write C, python or Node.js applications that
-interact directly with the Edison hardware.
-
-If you use our [{{ $names.base_images.lib }}/intel-edison-node][dockerbase-node] or [{{ $names.base_images.lib }}/intel-edison-python][dockerbase-python] base images in your applications, you will automatically have the mraa setup correctly for node.js or python respectively.
-
-Have a look at this [python example](https://github.com/shaunmulligan/hello-python-edison) or this [node.js example](https://github.com/shaunmulligan/edison-blink-node) to get started.
-
-### UPM for high level sensor and actuator libraries
-Intel provides the [UPM library][upm-link] which contains software drivers for a wide variety of commonly used sensors and actuators. These software drivers interact with the underlying hardware platform (or microcontroller), as well as with the attached sensors, through calls to [MRAA APIs][mraa-link].
-
-### Edison in USB Host mode
-
-The Edison needs a kernel module to be loaded to trigger the UBS HOST mode. This can be done in the following way.
-
-##### Hardware Pre-requisites:
-Your Edison will need to be powered externally for the USB host mode to be active - Either through the DC jack on the Arduino board or through the battery connector on the smaller Intel carrier board.
-
-##### Software Pre-requisites:
-The following code needs to be placed at the start before any device operations run in the container.
-```Bash
-#!/bin/bash
-
-mount -t devtmpfs none /dev
-udevd --daemon
-
-# g_multi needs a file to be passed which shows up as USB storage if Edison is in device mode.
-# We are creating a blank file here.
-dd if=/dev/zero of=/data/blank.img bs=10M count=1
-
-# The following is needed to get the Edison to switch to host mode - If the power connections aren't made for the HOST mode this exposes the file above as USB storage, emulates a USB network card and USB serial connected to the Edison.
-sync && modprobe g_multi file=/data/blank.img stall=0 idVendor=0x8087 idProduct=0x0A9E iProduct=Edison iManufacturer=Intel
-
-udevadm trigger
-udevadm settle
-
-# Shutdown the unnecessary usb0 spawned by g_mutli
-sleep 5s && ifconfig usb0 down
-```
-
-After this you should be able to easily use your Intel Edison in USB host mode.
-
 ## IOT-GATE-iMX8
 
 ### Serial ports
@@ -347,6 +305,14 @@ After that, navigate to the `Device Configuration` tab in the balenaCloud dashbo
 After the custom device tree has been validated, it can be included in newer balenaOS images. For Jetson TX2 and Nano, open a pull request in the [balena Jetson device](https://github.com/balena-os/balena-jetson) repository following this [example commit](https://github.com/balena-os/balena-jetson/commit/3dbf9c96e5986c2138f318d1ee9f0d5c1a2fc3c8). For the Jetson AGX Orin, the PR should be opened in the [balena Jetson Orin](https://github.com/balena-os/balena-jetson-orin) repository. Once your PR is approved and merged, a new balenaOS image that includes your custom device tree will become available shortly.
 
 Please note that if the changes for your carrier board expand past kernel device-trees, or require modifications to board configuration files like pin multiplexing configuration files or any other device-trees or files used by firmware, these may not be provided by the existing cloud images. During provisioning the resulting configuration changes are stored in the QSPI or in the hardware defined boot partitions, and thus will be replaced with the default values when updating the Host Operating System. Please [contact us](https://www.balena.io/contact-sales) if you would like to use a Jetson carrier board which may not be fully compatible with its' corresponding devkit, or with any of our cloud images for your Jetson module.
+
+### Configurable fan profiles
+
+Jetson Orin Devices running balenaOS revisions newer than v6.1.24 and supervisor versions greater than v16.10.0 offer support for configurable fan profiles. You can switch between the options provided by Jetpack by navigating to the Device/Fleet Configuration tab on the sidebar of the balenaCloud dashboard, clicking "activate" on the "Define the device fan profile" configuration option, and typing in the desired value. The input value should be a string, without quotes. The change will be applied at runtime and will not trigger a device reboot. Preloading the [fan profile configuration](/reference/OS/configuration/#fanprofile) before provisioning your device can be achieved by editing the [config.json](/reference/OS/configuration/#about-configjson) file.
+
+### Configurable power modes
+
+Jetson Orin Devices running balenaOS revisions newer than v6.1.24 and supervisor versions greater than v16.10.0 also offer the possibility for selecting the desired power mode. You can set the values *low*, *mid* and *high* or specify the power mode ID directly by navigating to the Device/Fleet Configuration tab on the sidebar of the balenaCloud dashboard, clicking "activate" on the "Define the device power mode" configuration option, and typing in the desired value. The input value should be a string, or a single digit number, without quotes. Please note that your device(s) will automatically reboot to apply the new power mode. The available power modes IDs for your device type are visible in the host OS in `/etc/nvpmodel.conf`. Preloading the desired power mode configuration can be achieved by editing the [config.json](/reference/OS/configuration/#about-configjson) file and specifying the desired [power mode](/reference/OS/configuration/#powermode) before provisioning the device.
 
 ### Container packages
 

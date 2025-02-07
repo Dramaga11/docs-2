@@ -13,9 +13,6 @@ mkdir -p shared/masterclass/debugging/
 # Use node-jq if jq is not pre-installed in the environment nor set in path
 which jq && JQ="$(which jq)" || JQ="../../node_modules/node-jq/bin/jq"
 
-# get latest CLI docs
-curl --fail --show-error -o pages/reference/balena-cli.md -L https://github.com/balena-io/balena-cli/raw/master/docs/balena-cli.md &
-
 # Engine
 # get latest balena-engine debugging docs
 curl --fail --show-error -o shared/masterclass/debugging/engine.md -L https://github.com/balena-os/balena-engine/raw/master/balena-docs/engine-debugging.md &
@@ -38,11 +35,11 @@ curl --fail --show-error -o shared/masterclass/debugging/supervisor.md -L https:
 cd shared/meta-balena/ && {
   curl --fail --show-error -o meta-balena.md -L https://raw.githubusercontent.com/balena-os/meta-balena/master/README.md
   # Extract modem text
-  ../../tools/extract-markdown.sh "Modems" <meta-balena.md >supported-modems.md
+  # ../../tools/extract-markdown.sh "Modems" <meta-balena.md >supported-modems.md
   # Extract Wifi adapters
-  ../../tools/extract-markdown.sh "WiFi Adapters" <meta-balena.md >supported-wifi-adapters.md
+  # ../../tools/extract-markdown.sh "WiFi Adapters" <meta-balena.md >supported-wifi-adapters.md
   # Extract Recommended WiFi USB dongle
-  ../../tools/extract-markdown.sh "Recommended WiFi USB dongle" <meta-balena.md >supported-wifi-usb-dongle.md
+  # ../../tools/extract-markdown.sh "Recommended WiFi USB dongle" <meta-balena.md >supported-wifi-usb-dongle.md
   # Extract config.json
   ../../tools/extract-markdown.sh "config.json" <meta-balena.md >config-json.md
   rm meta-balena.md
@@ -85,13 +82,13 @@ cd shared/projects/ && {
 } &
 
 # get latest node SDK docs
-cd pages/reference/sdk/ && {
-  curl --fail --show-error -O -L https://github.com/balena-io/balena-sdk/raw/master/DOCUMENTATION.md
-  echo "# Balena Node.js SDK" >node-sdk.md
-  tail -n +2 DOCUMENTATION.md >>node-sdk.md
-  rm DOCUMENTATION.md
-  cd -
-} &
+# cd pages/reference/sdk/ && {
+#   curl --fail --show-error -O -L https://github.com/balena-io/balena-sdk/raw/master/DOCUMENTATION.md
+#   echo "# Balena Node.js SDK" >node-sdk.md
+#   tail -n +2 DOCUMENTATION.md >>node-sdk.md
+#   rm DOCUMENTATION.md
+#   cd -
+# } &
 
 # get SDK README
 cd shared/sdk/ && {
@@ -103,6 +100,16 @@ cd shared/sdk/ && {
 } &
 
 # get latest python SDK docs
-curl --fail --show-error -o pages/reference/sdk/python-sdk.md -L https://github.com/balena-io/balena-sdk-python/raw/master/DOCUMENTATION.md &
+# curl --fail --show-error -o pages/reference/sdk/python-sdk.md -L https://github.com/balena-io/balena-sdk-python/raw/master/DOCUMENTATION.md &
+
+# get latest base images ref docs
+cd pages/reference/base-images/ && {
+  curl --fail --show-error -L https://raw.githubusercontent.com/balena-io-library/base-images/master/docs/base-images-ref.md >temp.md
+  echo "# Base Images List" >base-images-ref.md
+  cat temp.md >>base-images-ref.md
+  rm temp.md
+  cd -
+} &
+
 
 wait

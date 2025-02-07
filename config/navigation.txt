@@ -39,6 +39,7 @@ Learn
     [/learn/develop/local-mode]
     [/learn/develop/dockerfile]
     [/learn/develop/multicontainer]
+    Develop with Apps[/learn/develop/apps]
     [/learn/develop/blocks]
     [/learn/develop/container-contracts]
     [/learn/develop/runtime]
@@ -46,6 +47,7 @@ Learn
       [/learn/develop/hardware/gpio]
       [/learn/develop/hardware/usb]
       [/learn/develop/hardware/i2c-and-spi]
+      [/learn/develop/hardware/jetson-orin]
     Provision with cloud IoT[/learn/develop/cloud-iot-provisioning/$cloud]
 
   DEPLOY
@@ -60,19 +62,25 @@ Learn
     [/learn/deploy/deploy-with-balena-button]
 
   MANAGE
-    [/learn/manage/account]
-    [/learn/manage/organizations]
-    [/learn/manage/apps]
-    [/learn/manage/billing]
-    [/learn/manage/fleet-types]
     [/learn/manage/device-statuses]
-    [/learn/manage/filters-tags]
-    [/learn/manage/ssh-access]
     [/learn/manage/device-logs]
+    [/learn/manage/actions]
     [/learn/manage/configuration]
     [/learn/manage/variables]
-    [/learn/manage/actions]
-    [/learn/manage/support-access]
+    [/learn/manage/filters-tags]
+    [/learn/manage/ssh-access]
+
+  ACCOUNTS & BILLING
+    [/learn/accounts/account]
+    [/learn/accounts/enterprise-sso]
+      Identity Provider Setup
+        [/learn/accounts/idp-setup/microsoft-entra-saml-setup]
+        [/learn/accounts/idp-setup/google-workspace-saml-setup]
+    [/learn/accounts/billing]
+    [/learn/accounts/fleet-members]
+    [/learn/accounts/fleet-types]
+    [/learn/accounts/organizations]
+    [/learn/accounts/support-access]
 
   MORE RESOURCES
     [/learn/more/examples/labs-projects]
@@ -93,13 +101,13 @@ Learn
     [/learn/more/anti-patterns]
 
 FAQ
-  [/faq/troubleshooting/faq]
+  [/faq/questions]
   # Handled in redirects.txt
-  Troubleshooting[/faq/troubleshooting/troubleshooting]
+  Troubleshooting[/faq/troubleshooting]
     # with $device being dynamic
-    Troubleshooting for {{ $device.name }}[/faq/troubleshooting/troubleshooting/$device]
-  [/faq/troubleshooting/debugging-device-gateway]
-  [/faq/troubleshooting/debugging-storage-media]
+    Troubleshooting for {{ $device.name }}[/faq/troubleshooting/$device]
+  [/faq/debugging-device-gateway]
+  [/faq/debugging-storage-media]
 
 
 Reference
@@ -134,7 +142,7 @@ Reference
 
 
   Base images
-    [/reference/base-images/base-images]
+    [/reference/base-images/balena-base-images]
     [/reference/base-images/base-images-ref]
     [/reference/base-images/devicetypes]
 
@@ -142,10 +150,10 @@ Reference
     [/reference/api/overview]
     Resources[/reference/api/resources/$resource]
 
-  CLI[/reference/balena-cli]
+  CLI[/reference/balena-cli/$balenacli]
   SDKs
-    Node.js SDK[/reference/sdk/node-sdk]
-    Python SDK[/reference/sdk/python-sdk]
+    Node.js SDK[/reference/sdk/node-sdk/$nodesdk]
+    Python SDK[/reference/sdk/python-sdk/$pythonsdk]
     Deprecation Policy[/reference/sdk/deprecation-policy]
 
   Diagnostics

@@ -8,7 +8,6 @@ Recommended ways of interacting with GPIO on {{ $names.company.lower }} devices.
 
 * [Raspberry Pi](/hardware/gpio#raspberry-pi)
 * [Beaglebone](/hardware/gpio#beaglebone)
-* [Intel Edison](/hardware/gpio#intel-edison)
 
 ## Raspberry Pi
 
@@ -24,109 +23,6 @@ We recommend [Pi Pins][pi-pins] for node.js projects - we've found it works reli
 
 There are also specialist libraries available for powering particular classes of devices via GPIO, e.g. the [MAX7219 node library][max7219] for [MAX7219][max7219] LED displays.
 
-#### File System Access
-
-You can use the file system directly to access GPIO pins using a [terminal][terminal] connection, scripts deployed to your Pi, or the file system interface of your programming environment.
-
-GPIO pins are exposed via the Linux [sysfs][sysfs] file system at `/sys/class/gpio/gpio[pin number]`, e.g. pin 17 would be accessible via `/sys/class/gpio/gpio17`.
-
-In order to gain access to a pin it first has to be exported - you can do this by outputting the desired pin number to `/sys/class/gpio/export`. You can later 'unexport' this GPIO pin by outputting this number to `/sys/class/gpio/unexport`.
-
-Once a pin is exported you need to set its 'direction' - in or out - via `/sys/class/gpio/gpio[pin number]/direction`.
-
-From then on you can output raw data to `/sys/class/gpio/gpio[pin number]/value` bit-by-bit - 0 is interpreted as a low signal, 1 or any other non-zero value is interpreted as a high signal.
-
-E.g. accessing GPIO port 17 and sending some data:-
-
-```Bash
-# ls /sys/class/gpio/gpio17
-ls: cannot access /sys/class/gpio/gpio17: No such file or directory
-# echo 17 > /sys/class/gpio/export
-# ls /sys/class/gpio/gpio17
-/sys/class/gpio/gpio17
-# echo out > /sys/class/gpio/gpio17/direction
-# echo 1 > /sys/class/gpio/gpio17/value
-# echo 0 > /sys/class/gpio/gpio17/value
-# echo 1 > /sys/class/gpio/gpio17/value
-...
-# echo 17 > /sys/class/gpio/unexport
-# ls /sys/class/gpio/gpio17
-ls: cannot access /sys/class/gpio/gpio17: No such file or directory
-```
-
-For more details on sysfs GPIO access see the [official kernel documentation][kernel-gpio].
-
-<!-- ### Pin Layout
-
-GPIO pin numberings are listed below for all released models of the Raspberry Pi:-
-
-__Note:__ The tables below assume your Pi is orientated as shown in the diagram above - the SD card should be at the top of the Pi and the ethernet port at the bottom. GND refers to ground pins.
-
-__Note:__ If you have a 26-pin device, it's almost certainly a Raspberry Pi B rev2.
-
-### Raspberry Pi B Rev 1
-
-| Left |Right|
-|------|-----|
-| 3.3v | 5v  |
-| 0    | 5v  |
-| 1    | GND |
-| 4    | 14  | (IMPORTANT: GPIO4 unavailable)
-| GND  | 15  |
-| 17   | 18  |
-| 21   | GND |
-| 22   | 23  |
-| 3.3v | 24  |
-| 10   | GND |
-| 9    | 25  |
-| 11   | 8   |
-| GND  | 7   |
-
-### Raspberry Pi A/B Rev 2
-
-| Left |Right|
-|------|-----|
-| 3.3v | 5v  |
-| 2    | 5v  |
-| 3    | GND |
-| 4    | 14  | (IMPORTANT: GPIO4 unavailable)
-| GND  | 15  |
-| 17   | 18  |
-| 27   | GND |
-| 22   | 23  |
-| 3.3v | 24  |
-| 10   | GND |
-| 9    | 25  |
-| 11   | 8   |
-| GND  | 7   |
-
-### Raspberry Pi B+ / Raspberry Pi 2
-
-| Left |Right|
-|------|-----|
-| 3.3v | 5v  |
-| 2    | 5v  |
-| 3    | GND |
-| 4    | 14  | (IMPORTANT: GPIO4 unavailable)
-| GND  | 15  |
-| 17   | 18  |
-| 27   | GND |
-| 22   | 23  |
-| 3.3v | 24  |
-| 10   | GND |
-| 9    | 25  |
-| 11   | 8   |
-| GND  | 7   |
-| ---  | --- |
-| 5    | GND | (IMPORTANT: GPIO5 unavailable)
-| 6    | 12  |
-| 13   | GND |
-| 19   | 16  |
-| 26   | 20  |
-| GND  | 21  |
-
-__Note:__ The '---' pins between GND/7 and 5/GND are reserved for ID EEPROM and should not be used for GPIO ([reference][eeprom-diag]) -->
-
 #### Voltage
 
 All numbered data pins operate at 3.3v, however there are two 5v ports which output 5v DC output.
@@ -141,13 +37,6 @@ With this module you should be able to carry out basic GPIO and analog-to-digita
 
 If you would prefer a python implementation, then look at this [github issue](https://github.com/adafruit/adafruit-beaglebone-io-python/issues/80#issuecomment-163073883) and get involved in making it happen.
 
-## Intel Edison
-
-All the Intel Edison base images on our [Docker Hub][edison-base-image-link] come pre-installed with [libmraa](https://github.com/intel-iot-devkit/mraa), which allows you to easily interact with the GPIO.
-
-To get started with GPIO on edison have a look at our ["Edison GPIO in node.js"](https://github.com/shaunmulligan/edison-blink-node.git) example, or if you prefer python check out our ["Simple Edison GPIO with python"](https://github.com/shaunmulligan/hello-python-edison).
-
-[edison-base-image-link]:https://hub.docker.com/search/?q=resin%2Fedison&page=1&isAutomated=0&isOfficial=0&starCount=0&pullCount=0
 [terminal]:/runtime/terminal
 
 [balena]:{{ $links.mainSiteUrl }}

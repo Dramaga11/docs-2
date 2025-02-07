@@ -1,7 +1,7 @@
 ---
 title: Communicate outside the container
 excerpt: Talk to the host OS, supervisor, and network from within a {{ $names.company.lower }} container
-thumbnail: /img/common/device/running-webterminal-session.png
+thumbnail: /img/common/device/running-webterminal-session.webp
 ---
 
 # Communicate outside the container
@@ -244,7 +244,7 @@ __Note:__ For more information on networking with {{ $names.company.lower }}, se
 
 {{ $names.company.upper }} currently exposes port 80 for web forwarding. To enable web forwarding on a specific device, navigate to the device's **actions** tab on the {{ $names.cloud.lower }} dashboard and select the `Enable a public URL for this device` button. For more information about device URLs see the [Device Management Page](/management/devices#enable-public-device-url)
 
-<img alt="Enable public device URL" src="/img/common/device/enable-public-url-device.png">
+<img alt="Enable public device URL" src="/img/common/device/enable-public-url-device.webp">
 
 Running a server listening on port 80 with public device URL enabled will allow you to serve content from the device to the world. Here is an example of an [express.js][expressjs-link] server which will serve to the devices URL.
 
@@ -306,7 +306,7 @@ If your filesystem is not supported you can contact us through our [forums](http
 
 **Preparing the container**
 
-In order to be able to detect external media dynamically you will need to run the container in privileged mode and enable `udevd` on it. This can be easily done if you are using [balena base images](https://www.balena.io/docs/reference/base-images/base-images/#working-with-dynamically-plugged-devices) by:
+In order to be able to detect external media dynamically you will need to run the container in privileged mode and enable `udevd` on it. This can be easily done if you are using [balena base images](https://www.balena.io/docs/reference/base-images/balena-base-images/#working-with-dynamically-plugged-devices) by:
 
 - Adding `privileged: true` to your container's service definition on the `docker-compose.yml` file.
 - Adding `ENV UDEV=on` to your container's `Dockerfile`.
